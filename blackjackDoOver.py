@@ -104,11 +104,22 @@ while game:
             print("=" * 20)
         else:
             print("The dealer has bust")
-            continue
+            if player_hand_value < 22:
+                print("You win!")
+            else:
+                game = False
         counter += 1
-    if 22 > player_hand_value > dealer_hand_value > 16:
+    if 22 > player_hand_value > dealer_hand_value > 16 and player_decision == "s":
         print("{}, you Win with {} points. The Dealer only has {}".format(player, player_hand_value, dealer_hand_value))
         game = False
-    if 16 < player_hand_value < dealer_hand_value < 22:
+    if 16 < player_hand_value < dealer_hand_value < 22 and player_decision == "s":
         print("Sorry, {} you lose to the Dealer".format(player))
+        game = False
+    if player_hand_value > 21:
+        print("You Bust")
+        if dealer_hand_value < 22:
+            print("The Dealer wins")
+            game= False
+    if player_hand_value == dealer_hand_value and player_decision == "s":
+        print("The game was a tie")
         game = False
