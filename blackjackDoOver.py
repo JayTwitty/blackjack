@@ -79,7 +79,7 @@ while game:
     print("{}, your card value is: {} ".format(player,player_hand_value))
     print("The dealer's card value is: {}".format(dealer_hand_value))
     print("-" * 20)
-    if index == 0 and player_decision == "h":
+    if index == 0 and player_decision == "h" and player_hand_value < 22:
         player_decision = input("{} it's YOUR TURN, Press h for 'Hit' and Press s for 'Stay'".format(player)).lower()
         if player_decision == "h":
             player_real_hand.append(game_deck.cards.pop())
@@ -91,35 +91,50 @@ while game:
         else:
             print("{} you have bust".format(player))
         counter += 1
-        continue
-    else:
+    elif index == 1 or player_decision == "s":
         if dealer_hand_value < 17:
             print("It's the Dealer's turn...")
             dealer_real_hand.append(game_deck.cards.pop())
             print("Dealer chose to Hit!")
             print("=" * 20)
-        elif dealer_hand_value < 22:
+        elif 17 <= dealer_hand_value < 22:
             print("It's the Dealer's turn...")
             print("Dealer Stays at {}".format(dealer_hand_value))
             print("=" * 20)
+            if player_decision == "s":
+                if dealer_hand_value == player_hand_value:
+                    print("You tie")
+                    game = False
+                elif dealer_hand_value > player_hand_value:
+                    print("The Dealer wins")
+                    game = False
+                else:
+                    print("You win!")
+                    game = False
         else:
             print("The dealer has bust")
             if player_hand_value < 22:
                 print("You win!")
+                game = False
             else:
+                print("You both Bust. Game is a Push.")
                 game = False
         counter += 1
-    if 22 > player_hand_value > dealer_hand_value > 16 and player_decision == "s":
-        print("{}, you Win with {} points. The Dealer only has {}".format(player, player_hand_value, dealer_hand_value))
-        game = False
-    if 16 < player_hand_value < dealer_hand_value < 22 and player_decision == "s":
-        print("Sorry, {} you lose to the Dealer".format(player))
-        game = False
-    if player_hand_value > 21:
+    elif player_decision == "s" and dealer_hand_value > 16:
+        if 22 > player_hand_value > dealer_hand_value > 16:
+            print("{}, you Win with {} points. The Dealer only has {}".format(player, player_hand_value, dealer_hand_value))
+            game = False
+        if 16 < player_hand_value < dealer_hand_value < 22 and player_decision == "s":
+            print("Sorry, {} you lose to the Dealer".format(player))
+            game = False
+    elif player_hand_value > 21:
         print("You Bust")
         if dealer_hand_value < 22:
             print("The Dealer wins")
             game= False
-    if player_hand_value == dealer_hand_value and player_decision == "s":
-        print("The game was a tie")
-        game = False
+    elif player_hand_value == dealer_hand_value and player_decision == "s" and dealer_hand_value > 16:
+            print("The game was a tie")
+            game = False
+    elif player_hand_value == 21 and dealer_hand_value < 21:
+            print("You win")
+            game = False
