@@ -35,14 +35,17 @@ for x in range(2):
     player_real_hand.append(game_deck.cards.pop())
     dealer_real_hand.append(game_deck.cards.pop())
 game = True
-counter = 0
-while True:
+counter = 0     #counter created to show alternate turns
+player_decision = "h"
+while game:
     print("Round: {}".format(counter + 1))
     print("{} your hand is...".format(player))
     print(player_real_hand)
     print("The Dealer\'s hand is...")
     print(dealer_real_hand)
+
 # GAME LOGIC: START OUT WITH FINDING THE VALUE OF THE DEALER AND PLAYER HAND
+
     index = counter % 2
     player_values = []
     dealer_values = []
@@ -76,15 +79,17 @@ while True:
     print("{}, your card value is: {} ".format(player,player_hand_value))
     print("The dealer's card value is: {}".format(dealer_hand_value))
     print("-" * 20)
-    if index == 0:
+    if index == 0 and player_decision == "h":
         player_decision = input("{} it's YOUR TURN, Press h for 'Hit' and Press s for 'Stay'".format(player)).lower()
         if player_decision == "h":
             player_real_hand.append(game_deck.cards.pop())
             print("{} chose to Hit".format(player))
             print("=" * 20)
-        else:
-            print("Player Stays at {}".format(player_hand_value))
+        elif player_decision != "s" and player_hand_value < 22 :
+            print("{} Stays at {}".format(player, player_hand_value))
             print("=" * 20)
+        else:
+            print("{} you have bust".format(player))
         counter += 1
         continue
     else:
@@ -93,10 +98,17 @@ while True:
             dealer_real_hand.append(game_deck.cards.pop())
             print("Dealer chose to Hit!")
             print("=" * 20)
-        else:
+        elif dealer_hand_value < 22:
             print("It's the Dealer's turn...")
             print("Dealer Stays at {}".format(dealer_hand_value))
             print("=" * 20)
+        else:
+            print("The dealer has bust")
+            continue
         counter += 1
-    continue
-
+    if 22 > player_hand_value > dealer_hand_value > 16:
+        print("{}, you Win with {} points. The Dealer only has {}".format(player, player_hand_value, dealer_hand_value))
+        game = False
+    if 16 < player_hand_value < dealer_hand_value < 22:
+        print("Sorry, {} you lose to the Dealer".format(player))
+        game = False
