@@ -89,8 +89,8 @@ while continue_game == "y":
             elif player_decision != "s" and player_hand_value < 22 :
                 print("{} Stays at {}".format(player, player_hand_value))
                 print("=" * 20)
-            else:
-                print("{} you have bust".format(player))
+            #else:
+                #print("{} you have bust".format(player))
             counter += 1
         elif index == 1 or player_decision == "s":
             if dealer_hand_value < 17:
