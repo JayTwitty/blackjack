@@ -39,11 +39,11 @@ while continue_game == "y":
     counter = 0     #counter created to show alternate turns
     player_decision = "h"
     while game:
-        print("Round: {}".format(counter + 1))
+        print("\nRound: {}".format(counter + 1))
         print("{} your hand is...".format(player))
         print(player_real_hand)
         print("The Dealer\'s hand is...")
-        print(dealer_real_hand)
+        print(['hidden'] , dealer_real_hand[1:])
 
     # GAME LOGIC: START OUT WITH FINDING THE VALUE OF THE DEALER AND PLAYER HAND
 
@@ -78,10 +78,10 @@ while continue_game == "y":
                 dealer_hand_value += item
         print("\n")
         print("{}, your card value is: {} ".format(player,player_hand_value))
-        print("The dealer's card value is: {}".format(dealer_hand_value))
+        #print("The dealer's card value is: {}".format(dealer_hand_value))
         print("-" * 20)
         if index == 0 and player_decision == "h" and player_hand_value < 22:
-            player_decision = input("{} it's YOUR TURN, Press h for 'Hit' and Press s for 'Stay'".format(player)).lower()
+            player_decision = input("{} it's YOUR TURN, Press h for 'Hit' and Press s for 'Stay' ".format(player)).lower()
             if player_decision == "h":
                 player_real_hand.append(game_deck.cards.pop())
                 print("{} chose to Hit".format(player))
@@ -139,6 +139,7 @@ while continue_game == "y":
         elif player_hand_value == 21 and dealer_hand_value < 21:
                 print("You win")
                 game = False
+    print("The dealer had {} for a value of {}".format(dealer_real_hand, dealer_hand_value))
     continue_game = input("\nWould you like to play again? ('Enter'y/n) ").lower()
     print("=" * 20)
 
