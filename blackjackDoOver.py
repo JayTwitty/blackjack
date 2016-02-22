@@ -100,11 +100,12 @@ while continue_game == "y":
                 print("=" * 20)
             elif 17 <= dealer_hand_value < 22:
                 print("It's the Dealer's turn...")
-                print("Dealer Stays at {}".format(dealer_hand_value))
+                print("Dealer Stays")
+                #print("Dealer Stays at {}".format(dealer_hand_value))
                 print("=" * 20)
                 if player_decision == "s":
                     if dealer_hand_value == player_hand_value:
-                        print("You tie")
+                        print("You tie... PUSH!")
                         game = False
                     elif dealer_hand_value > player_hand_value:
                         print("The Dealer wins")
@@ -118,7 +119,7 @@ while continue_game == "y":
                     print("You win!")
                     game = False
                 else:
-                    print("You both Bust. Game is a Push.")
+                    print("You both Bust..PUSH!")
                     game = False
             counter += 1
         elif player_decision == "s" and dealer_hand_value > 16:
@@ -133,6 +134,9 @@ while continue_game == "y":
             if dealer_hand_value < 22:
                 print("The Dealer wins")
                 game= False
+            else:
+                print("You both Bust... PUSH!")
+                game = False
         elif player_hand_value == dealer_hand_value and player_decision == "s" and dealer_hand_value > 16:
                 print("The game was a tie")
                 game = False
@@ -142,6 +146,6 @@ while continue_game == "y":
     print("The dealer had {} for a value of {}".format(dealer_real_hand, dealer_hand_value))
     continue_game = input("\nWould you like to play again? ('Enter'y/n) ").lower()
     print("=" * 20)
-
+print("\nThank you for playing {}! Goodbye!".format(player))
 
 
